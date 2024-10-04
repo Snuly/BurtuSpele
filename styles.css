@@ -15,9 +15,13 @@ body {
 .container {
     text-align: center;
     background-color: #1a1818;
-    padding: 1000px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 75%;
+    width: 100vh;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .tiles-container, .letters-container {
@@ -28,13 +32,14 @@ body {
 }
 
 .tile, .letter {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     border: 2px solid #000;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 40px;
 }
 
 .tile {
@@ -59,4 +64,41 @@ button {
     font-weight: bold;
     margin-top: 20px;
     color: #ffffff;
+    font-size: 30px;
 }
+
+#continue-btn {
+    background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 1000% 1000%;
+    animation: rainbow_animation 12s ease-in infinite;
+    font-size: 40px;
+    color: transparent;
+    border: none;
+    font-weight: bold;
+}
+
+#end-btn {
+    background: linear-gradient(to right, #ff6666, #ff0000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 1000% 1000%;
+    animation: rainbow_animation 3s ease-in infinite;
+    font-size: 40px;
+    color: transparent;
+    border: none;
+    font-weight: bold;
+}
+
+
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0% 82%;
+    }
+  
+    50% {
+        background-position: 100% 19%;
+    }
+  }
+  
