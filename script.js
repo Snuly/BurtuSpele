@@ -139,16 +139,44 @@ function checkGuess() {
     } else {
         document.getElementById('result').innerText = 'Incorrect! Removing wrong letters...';
 
-        // Remove incorrect letters but keep the correct ones
+        // Track letters that are correct and placed in the right position
+        let correctLettersInTiles = [];
+
+        // First pass: identify the correct letters and mark them
         for (let i = 0; i < currentWord.length; i++) {
             const tile = document.getElementById(`tile-${i}`);
+            if (tile.innerText === currentWord[i]) {
+                correctLettersInTiles.push(tile.innerText); // Mark this letter as correctly placed
+            }
+        }
+
+        // Second pass: handle incorrect letters
+        for (let i = 0; i < currentWord.length; i++) {
+            const tile = document.getElementById(`tile-${i}`);
+
+            // If the letter in the tile is not correct
             if (tile.innerText !== currentWord[i]) {
-                // Make the letter visible again in the bottom
-                const letterToReveal = scrambledWord.split('').indexOf(tile.innerText);
-                if (letterToReveal !== -1) {
-                    document.getElementById(`letter-${letterToReveal}`).style.visibility = 'visible';
-                }
-                tile.innerText = ''; // Clear incorrect letter
+                const letter = tile.innerText;
+
+                // Loop through scrambledWord to find all occurrences of the letter
+                scrambledWord.split('').forEach((scrambledLetter, index) => {
+                    const letterDiv = document.getElementById(`letter-${index}`);
+
+                    // Make sure only the incorrect letter is revealed and avoid doubling the correct ones
+                    if (scrambledLetter === letter && letterDiv.style.visibility === 'hidden') {
+                        // Check if this letter is already placed correctly in the correctLettersInTiles
+                        const correctLetterIndex = correctLettersInTiles.indexOf(letter);
+                        if (correctLetterIndex === -1) {
+                            letterDiv.style.visibility = 'visible'; // Reveal only if it's not correctly placed
+                        } else {
+                            // Remove the letter from the correctLettersInTiles to ensure no duplication
+                            correctLettersInTiles.splice(correctLetterIndex, 1);
+                        }
+                    }
+                });
+
+                // Clear incorrect letters from the tile
+                tile.innerText = '';
             }
         }
     }
